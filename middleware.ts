@@ -13,5 +13,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: 'app/api/:path*', // Apply middleware to all API routes
+  matcher: '/api/:path*', // Apply middleware to all API routes
 }
