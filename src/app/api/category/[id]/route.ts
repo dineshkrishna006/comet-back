@@ -7,7 +7,12 @@ const payload = await getPayload({ config })
 export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const api_ = process.env.API_URL || ''
-
+    const origin = await req.headers.get('origin')
+    console.log(origin)
+    // Check for invalid origin
+    if (!origin || origin !== api_) {
+      return NextResponse.json({ error: 'Method not allowed' }, { status: 405 })
+    }
     const id = (await params).id
     const result = await payload.find({
       collection: 'bookmarks',
@@ -37,6 +42,13 @@ export async function POST(req: NextRequest) {
     const body = await req.json()
     const { name, category_id, url_ } = body
     console.log(name, category_id, url_)
+    const origin = await req.headers.get('origin')
+    console.log(origin)
+    // Check for invalid origin
+    if (!origin || origin !== api_) {
+      return NextResponse.json({ error: 'Method not allowed' }, { status: 405 })
+    }
+
     await payload.create({
       collection: 'bookmarks',
       data: {
@@ -64,7 +76,12 @@ export async function DELETE(req: NextRequest) {
     const body = await req.json()
     const { id, category_id } = body
     console.log(category_id, id)
-
+    const origin = await req.headers.get('origin')
+    console.log(origin)
+    // Check for invalid origin
+    if (!origin || origin !== api_) {
+      return NextResponse.json({ error: 'Method not allowed' }, { status: 405 })
+    }
     await payload.delete({
       collection: 'bookmarks',
       id: id,
@@ -97,6 +114,13 @@ export async function PATCH(req: NextRequest) {
 
     const body = await req.json()
     const { url_, id } = body
+    const origin = await req.headers.get('origin')
+    console.log(origin)
+    // Check for invalid origin
+    if (!origin || origin !== api_) {
+      return NextResponse.json({ error: 'Method not allowed' }, { status: 405 })
+    }
+
     await payload.update({
       collection: 'bookmarks',
       id: id,

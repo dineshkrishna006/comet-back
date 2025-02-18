@@ -7,8 +7,14 @@ export async function POST(req: NextRequest) {
     const api_ = process.env.API_URL || ''
     const body = await req.json()
     const { user_id, req_type, name } = body
-    // console.log(user_id, req_type)
-    // console.log(user_id)
+    const origin = await req.headers.get('origin')
+    console.log(origin)
+    // Check for invalid origin
+    if (!origin || origin !== api_) {
+      return NextResponse.json({ error: 'Method not allowed' }, { status: 405 })
+    }
+
+    // If we reach here, origin is valid
     if (req_type === 'get') {
       const result = await payload.find({
         collection: 'categories',
@@ -19,11 +25,11 @@ export async function POST(req: NextRequest) {
           },
         },
       })
-      //   console.log('GET request to /api/category')
+
       const response = NextResponse.json(result, { status: 200 })
-      response.headers.set('Access-Control-Allow-Origin', api_) // Replace with your frontend domain
+      response.headers.set('Access-Control-Allow-Origin', api_)
       response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE')
-      response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization') // Include necessary headers
+      response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization')
       return response
     }
     if (req_type === 'create') {
@@ -59,7 +65,12 @@ export async function DELETE(req: NextRequest) {
     const body = await req.json()
     const { user_id, id } = body
     console.log(user_id, id)
-
+    const origin = await req.headers.get('origin')
+    console.log(origin)
+    // Check for invalid origin
+    if (!origin || origin !== api_) {
+      return NextResponse.json({ error: 'Method not allowed' }, { status: 405 })
+    }
     // try {
     //
     // } catch (error) {
