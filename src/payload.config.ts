@@ -7,20 +7,36 @@ import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
+import { Category } from './collections/Category'
+import { Bookmark } from './collections/Bookmark'
 import { Users } from './collections/Users'
-import { Media } from './collections/Media'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
-
+// const cors = {
+//   origin: [
+//     'http://localhost:3001', // Your Next.js frontend in development
+//     // Your production domain
+//   ],
+//   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+//   credentials: true, // Important for authentication
+//   allowedHeaders: [
+//     'Content-Type',
+//     'Authorization',
+//     'x-user-id', // If you're using custom headers
+//     'Content-Length',
+//     'Accept',
+//     'Origin',
+//     'Host',
+//   ],
+// }
 export default buildConfig({
   admin: {
-    user: Users.slug,
-    importMap: {
-      baseDir: path.resolve(dirname),
-    },
+    disable: true,
   },
-  collections: [Users, Media],
+  // cors: cors.origin,
+
+  collections: [Category, Bookmark, Users],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
