@@ -4,7 +4,7 @@ import config from '@payload-config'
 const payload = await getPayload({ config })
 export async function POST(req: NextRequest) {
   try {
-    const api_ = process.env.API_URL
+    const api_ = process.env.API_URL || ''
     const body = await req.json()
     const { user_id, req_type, name } = body
     // console.log(user_id, req_type)
@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
 }
 export async function DELETE(req: NextRequest) {
   try {
-    const api_ = process.env.API_URL
+    const api_ = process.env.API_URL || ''
     const body = await req.json()
     const { user_id, id } = body
     console.log(user_id, id)

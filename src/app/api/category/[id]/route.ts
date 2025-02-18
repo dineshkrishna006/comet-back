@@ -6,7 +6,7 @@ const payload = await getPayload({ config })
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const api_ = process.env.API_URL
+    const api_ = process.env.API_URL || ''
 
     const id = (await params).id
     const result = await payload.find({
@@ -32,7 +32,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
 }
 export async function POST(req: NextRequest) {
   try {
-    const api_ = process.env.API_URL
+    const api_ = process.env.API_URL || ''
 
     const body = await req.json()
     const { name, category_id, url_ } = body
@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
 
 export async function DELETE(req: NextRequest) {
   try {
-    const api_ = process.env.API_URL
+    const api_ = process.env.API_URL || ''
 
     const body = await req.json()
     const { id, category_id } = body
@@ -93,7 +93,7 @@ export async function DELETE(req: NextRequest) {
 
 export async function PATCH(req: NextRequest) {
   try {
-    const api_ = process.env.API_URL
+    const api_ = process.env.API_URL || ''
 
     const body = await req.json()
     const { url_, id } = body
