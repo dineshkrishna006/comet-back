@@ -6,6 +6,8 @@ const payload = await getPayload({ config })
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const api_ = process.env.API_URL
+
     const id = (await params).id
     const result = await payload.find({
       collection: 'bookmarks',
@@ -19,9 +21,9 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
     // console.log(result)
     console.log('GET request to /api/category/id')
     const response = NextResponse.json(result.docs, { status: 200 })
-    response.headers.set('Access-Control-Allow-Origin', 'http://localhost:3000') // Replace with your frontend domain
+    response.headers.set('Access-Control-Allow-Origin', api_)
     response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE')
-    response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization') // Include necessary headers
+    response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization')
     return response
   } catch (error) {
     console.error('Error:', error)
@@ -30,6 +32,8 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
 }
 export async function POST(req: NextRequest) {
   try {
+    const api_ = process.env.API_URL
+
     const body = await req.json()
     const { name, category_id, url_ } = body
     console.log(name, category_id, url_)
@@ -43,9 +47,9 @@ export async function POST(req: NextRequest) {
     })
     console.log('POST request to /api/category/id')
     const response = NextResponse.json({ message: 'Hello inside category route' }, { status: 200 })
-    response.headers.set('Access-Control-Allow-Origin', 'http://localhost:3000') // Replace with your frontend domain
+    response.headers.set('Access-Control-Allow-Origin', api_)
     response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE')
-    response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization') // Include necessary headers
+    response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization')
     return response
   } catch (error) {
     console.error('Error:', error)
@@ -55,6 +59,8 @@ export async function POST(req: NextRequest) {
 
 export async function DELETE(req: NextRequest) {
   try {
+    const api_ = process.env.API_URL
+
     const body = await req.json()
     const { id, category_id } = body
     console.log(category_id, id)
@@ -74,9 +80,9 @@ export async function DELETE(req: NextRequest) {
       { status: 200 },
     )
 
-    response.headers.set('Access-Control-Allow-Origin', 'http://localhost:3000') // Replace with your frontend domain
+    response.headers.set('Access-Control-Allow-Origin', api_)
     response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE')
-    response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization') // Include necessary headers
+    response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization')
 
     return response
   } catch (error) {
@@ -87,6 +93,8 @@ export async function DELETE(req: NextRequest) {
 
 export async function PATCH(req: NextRequest) {
   try {
+    const api_ = process.env.API_URL
+
     const body = await req.json()
     const { url_, id } = body
     await payload.update({
@@ -101,9 +109,9 @@ export async function PATCH(req: NextRequest) {
       { status: 200 },
     )
 
-    response.headers.set('Access-Control-Allow-Origin', 'http://localhost:3000') // Replace with your frontend domain
+    response.headers.set('Access-Control-Allow-Origin', api_)
     response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE')
-    response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization') // Include necessary headers
+    response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization')
 
     return response
   } catch (error) {

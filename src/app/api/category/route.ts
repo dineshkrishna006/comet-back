@@ -4,6 +4,7 @@ import config from '@payload-config'
 const payload = await getPayload({ config })
 export async function POST(req: NextRequest) {
   try {
+    const api_ = process.env.API_URL
     const body = await req.json()
     const { user_id, req_type, name } = body
     // console.log(user_id, req_type)
@@ -20,7 +21,7 @@ export async function POST(req: NextRequest) {
       })
       //   console.log('GET request to /api/category')
       const response = NextResponse.json(result, { status: 200 })
-      response.headers.set('Access-Control-Allow-Origin', 'http://localhost:3000') // Replace with your frontend domain
+      response.headers.set('Access-Control-Allow-Origin', api_) // Replace with your frontend domain
       response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE')
       response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization') // Include necessary headers
       return response
@@ -54,6 +55,7 @@ export async function POST(req: NextRequest) {
 }
 export async function DELETE(req: NextRequest) {
   try {
+    const api_ = process.env.API_URL
     const body = await req.json()
     const { user_id, id } = body
     console.log(user_id, id)
@@ -86,7 +88,7 @@ export async function DELETE(req: NextRequest) {
       { status: 200 },
     )
 
-    response.headers.set('Access-Control-Allow-Origin', 'http://localhost:3000') // Replace with your frontend domain
+    response.headers.set('Access-Control-Allow-Origin', api_) // Replace with your frontend domain
     response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE')
     response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization') // Include necessary headers
 
